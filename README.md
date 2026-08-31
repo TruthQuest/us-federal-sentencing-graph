@@ -60,8 +60,7 @@ us-federal-sentencing-graph/
 │   └── (CSVs per script, plus sparql_report.txt)
 ├── run_all.sh                           End-to-end orchestrator
 ├── LICENSE                              Proprietary; see LICENSE file
-├── KNOWN_ISSUES.md
-└── README.md                            (this file)
+                         (this file)
 ```
 
 ## Reproducing the analysis
