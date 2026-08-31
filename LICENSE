@@ -1,0 +1,90 @@
+Copyright (c) 2026 Trace Origin LLC. All rights reserved.
+
+PROPRIETARY LICENSE
+
+This repository and its contents, including but not limited to source
+code, ontology files, SHACL shapes, SKOS vocabularies, analysis scripts,
+data files, HTML reports, submission documents, and all documentation,
+are the exclusive property of Trace Origin LLC.
+
+PERMITTED USES
+
+  1. Non-commercial academic citation and quotation of findings under
+     standard fair use, with attribution to:
+
+       Brattin, E. (2026). us-federal-sentencing-graph: A formal
+       ontology and analysis of race-patterned charge stacking in the
+       federal criminal system, FY2014-2025. Trace Origin LLC.
+       https://github.com/TruthQuest/us-federal-sentencing-graph
+
+  2. Inspection and verification of the reproducibility of published
+     findings by academic reviewers, policy researchers, litigators,
+     and journalists, using the code and data in this repository as
+     provided.
+
+  3. Citation of this repository in submissions to the U.S. Sentencing
+     Commission, congressional judiciary committees, U.S. Department of
+     Justice policy offices, federal courts (including amicus filings),
+     and in journalistic reporting on the subject matter.
+
+PROHIBITED USES
+
+  1. Commercial use, including incorporation into commercial products,
+     services, consulting deliverables, or paid reports, without prior
+     written permission from Trace Origin LLC.
+
+  2. Redistribution, republication, or mirroring of the repository or
+     any substantial portion thereof.
+
+  3. Creation of derivative works, translations, or adaptations
+     without prior written permission.
+
+  4. Use of any code, ontology, or derivative dataset in this
+     repository as training data for machine learning systems,
+     language models, or automated classification, sentencing, or
+     risk-assessment systems targeting individuals.
+
+  5. Attempted re-identification of individual defendants represented
+     in the derivative A-Box, including linkage of USSC-anonymized
+     records against external data sources for the purpose of
+     recovering personally identifiable information.
+
+DATA ATTRIBUTION
+
+The instance data (A-Box) in this repository is derived from the
+public Individual Offender Datafiles published annually by the
+U.S. Sentencing Commission, which are in the public domain at source.
+Any permitted use of this repository must separately acknowledge the
+U.S. Sentencing Commission as the primary source of the underlying
+case data:
+
+  U.S. Sentencing Commission (2014-2025). Individual Offender
+  Datafiles, FY2014 through FY2025.
+  https://www.ussc.gov/research/datafiles/commission-datafiles
+
+The proprietary license above applies to the code, ontology, SHACL
+shapes, SKOS vocabularies, analytical outputs, HTML reports, and all
+documentation that constitute the derivative work. It does not
+restrict any use of the underlying USSC data at its public source.
+
+CONTACT
+
+For licensing inquiries, commercial use requests, or questions about
+permitted uses:
+
+  Trace Origin LLC
+  ebrattin@traceoriginresearch.com
+  https://www.traceoriginresearch.com
+
+NO WARRANTY
+
+THIS REPOSITORY IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED. TRACE ORIGIN LLC MAKES NO REPRESENTATIONS OR
+WARRANTIES REGARDING THE ACCURACY, COMPLETENESS, OR SUITABILITY OF
+THE CONTENTS FOR ANY PURPOSE. USE AT YOUR OWN RISK.
+
+The findings in this repository describe statistical structure in
+federal charging outcomes. They do not constitute legal advice, do
+not establish causal or intentional discrimination, and do not
+support individual defendant claims without independent case-specific
+analysis by qualified counsel.
