@@ -1,0 +1,255 @@
+==============================================================================
+USSC CHARGE GRAPH — SPARQL REPORT
+Generated: 2026-08-31T00:48:38+00:00
+Graph size: 9,492 triples
+==============================================================================
+
+
+------------------------------------------------------------------------------
+Query 1: Regime membership × community disparity
+------------------------------------------------------------------------------
+
+RATIONALE
+For each detected charging regime, list its member offenses and every
+statistically significant demographic-group disparity in regime membership,
+for both the unconditional and primary-conditional specifications. This is
+the query that could not be posed against the source CSVs at all, because
+regime membership is an empirically-derived ontology object, not a column in
+the data.
+
+RESULTS (26 rows)
+  regimeLabel                                  members                                                                                                                                                                                           demographic                                        specification           oddsRatio  pValue  
+  -------------------------------------------  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  -------------------------------------------------  ----------------------  ---------  --------
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  C(defendant_race)[T.Black]                         conditional_on_primary  0.5832     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  C(defendant_race)[T.Black]                         unconditional           0.4081     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  C(defendant_race)[T.Hispanic]                      conditional_on_primary  0.738      0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  C(defendant_race)[T.Hispanic]                      unconditional           0.4528     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_citizenship[T.Legal Alien]               unconditional           1.9965     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_citizenship[T.Non-US Extra-Territorial]  conditional_on_primary  1.8834     0.000046
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_citizenship[T.Non-US Extra-Territorial]  unconditional           2.4114     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_citizenship[T.US Citizen]                conditional_on_primary  0.5696     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_citizenship[T.US Citizen]                unconditional           0.5551     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_citizenship[T.Unknown]                   conditional_on_primary  6.0195     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_citizenship[T.Unknown]                   unconditional           7.926      0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_sex[T.M]                                 conditional_on_primary  0.3368     0.0     
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  Money Laundering (18 USC §§1956-57, 31 USC §§5322-31), Administration of Justice (obstruction, perjury, false statements, failure to appear), Fraud (wire, mail, bank, ID, computer, healthcare)  defendant_sex[T.M]                                 unconditional           0.1939     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            C(defendant_race)[T.Black]                         conditional_on_primary  1.7146     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            C(defendant_race)[T.Black]                         unconditional           2.4505     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            C(defendant_race)[T.Hispanic]                      conditional_on_primary  1.3549     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            C(defendant_race)[T.Hispanic]                      unconditional           2.2085     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_citizenship[T.Legal Alien]               unconditional           0.5009     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_citizenship[T.Non-US Extra-Territorial]  conditional_on_primary  0.5309     0.000046
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_citizenship[T.Non-US Extra-Territorial]  unconditional           0.4147     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_citizenship[T.US Citizen]                conditional_on_primary  1.7556     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_citizenship[T.US Citizen]                unconditional           1.8014     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_citizenship[T.Unknown]                   conditional_on_primary  0.1661     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_citizenship[T.Unknown]                   unconditional           0.1262     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_sex[T.M]                                 conditional_on_primary  2.9695     0.0     
+  Regime 1 (Full): FIREARM, RACKET             Racketeering / RICO / Hobbs Act / Extortion, Firearms (Title 18 Ch 44)                                                                                                                            defendant_sex[T.M]                                 unconditional           5.1579     0.0     
+
+SPARQL
+  PREFIX : <https://traceoriginresearch.com/ussc-charge-graph/onto#>
+  PREFIX off: <https://traceoriginresearch.com/ussc-charge-graph/offense#>
+  PREFIX res: <https://traceoriginresearch.com/ussc-charge-graph/result#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  
+  SELECT ?regimeLabel ?members ?demographic ?specification ?oddsRatio ?pValue
+  WHERE {
+    ?regime a :ChargingRegime ;
+            rdfs:label ?regimeLabel .
+    {
+      # Aggregate regime members into a single string per regime
+      SELECT ?regime (GROUP_CONCAT(?offenseLabel; separator=", ") AS ?members)
+      WHERE {
+        ?offense :hasRegimeMembership ?regime ;
+                 skos:prefLabel ?offenseLabel .
+      }
+      GROUP BY ?regime
+    }
+    ?claim a :CommunityDisparityClaim ;
+           :aboutRegime ?regime ;
+           :aboutDemographicGroup ?demographic ;
+           :specification ?specification ;
+           :oddsRatio ?oddsRatio ;
+           :pValue ?pValue .
+    FILTER(?pValue < 0.001)
+  }
+  ORDER BY ?regimeLabel ?demographic ?specification
+
+
+------------------------------------------------------------------------------
+Query 2: Two-filter discipline in action
+------------------------------------------------------------------------------
+
+RATIONALE
+List offense pairs that ARE candidates for demographic-disparity testing
+(joint sample size >= 100) but are NOT candidates for the regime-edge graph
+(they failed the population-level effect-size or significance filter). These
+are exactly the pairs where naive pop-level filtering would have hidden a
+real demographic-conditional disparity by averaging it away. The T-Box
+distinction makes them queryable.
+
+RESULTS (19 rows)
+  offenseA    offenseB    pValue  
+  ----------  ----------  --------
+  OTHER       VIOLENT     0.0     
+  FRAUD       TAX         0.0     
+  CONSPIRACY  OTHER       0.0     
+  CONSPIRACY  LAUNDER     0.0     
+  DRUG        LAUNDER     0.0     
+  FIREARM     VIOLENT     0.0     
+  CONSPIRACY  FRAUD       0.0     
+  ADMIN_JUST  OTHER       0.0     
+  OTHER       RACKET      0.0     
+  ADMIN_JUST  CONSPIRACY  0.0     
+  ADMIN_JUST  VIOLENT     0.0     
+  OTHER       SEX         0.0     
+  CONSPIRACY  VIOLENT     0.000009
+  CONSPIRACY  TAX         0.000419
+  LAUNDER     OTHER       0.002633
+  RACKET      VIOLENT     0.00516 
+  LAUNDER     TAX         0.00772 
+  ADMIN_JUST  RACKET      0.134985
+  ADMIN_JUST  TAX         0.214055
+
+SPARQL
+  PREFIX : <https://traceoriginresearch.com/ussc-charge-graph/onto#>
+  PREFIX off: <https://traceoriginresearch.com/ussc-charge-graph/offense#>
+  PREFIX res: <https://traceoriginresearch.com/ussc-charge-graph/result#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  
+  SELECT DISTINCT ?offenseA ?offenseB ?pValue
+  WHERE {
+    ?disparityCand a :DisparityTestCandidate ;
+                   :coOccursWith ?offenseA, ?offenseB ;
+                   :pValue ?pValue .
+    # Undirected pair: keep only ordered pairs so each shows once
+    FILTER(STR(?offenseA) < STR(?offenseB))
+    FILTER NOT EXISTS {
+      ?regimeCand a :RegimeEdgeCandidate ;
+                  :coOccursWith ?offenseA, ?offenseB .
+    }
+  }
+  ORDER BY ?pValue
+  LIMIT 30
+
+
+------------------------------------------------------------------------------
+Query 3: Effect of primary-offense conditioning on race coefficients
+------------------------------------------------------------------------------
+
+RATIONALE
+For each detected regime, contrast the race-coefficient in the unconditional
+specification against the same coefficient after adding primary offense as a
+covariate. Coefficients that stay elevated after conditioning are stacking-
+behavior disparities. Coefficients that collapse toward 1.0 are primary-
+offense-selection disparities. This is the load-bearing methodological
+contrast of the pipeline.
+
+RESULTS (4 rows)
+  regimeLabel                                  demographic                    unconditionalOR  conditionalOR
+  -------------------------------------------  -----------------------------  ---------------  -------------
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  C(defendant_race)[T.Black]     0.4081           0.5832       
+  Regime 0 (Full): ADMIN_JUST, FRAUD, LAUNDER  C(defendant_race)[T.Hispanic]  0.4528           0.738        
+  Regime 1 (Full): FIREARM, RACKET             C(defendant_race)[T.Black]     2.4505           1.7146       
+  Regime 1 (Full): FIREARM, RACKET             C(defendant_race)[T.Hispanic]  2.2085           1.3549       
+
+SPARQL
+  PREFIX : <https://traceoriginresearch.com/ussc-charge-graph/onto#>
+  PREFIX off: <https://traceoriginresearch.com/ussc-charge-graph/offense#>
+  PREFIX res: <https://traceoriginresearch.com/ussc-charge-graph/result#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  
+  SELECT ?regimeLabel ?demographic ?unconditionalOR ?conditionalOR
+  WHERE {
+    ?regime a :ChargingRegime ;
+            rdfs:label ?regimeLabel .
+    ?uncondClaim a :CommunityDisparityClaim ;
+                 :aboutRegime ?regime ;
+                 :aboutDemographicGroup ?demographic ;
+                 :specification "unconditional" ;
+                 :oddsRatio ?unconditionalOR ;
+                 :pValue ?uncP .
+    ?condClaim a :CommunityDisparityClaim ;
+               :aboutRegime ?regime ;
+               :aboutDemographicGroup ?demographic ;
+               :specification "conditional_on_primary" ;
+               :oddsRatio ?conditionalOR ;
+               :pValue ?cP .
+    FILTER(?uncP < 0.001 || ?cP < 0.001)
+    FILTER(CONTAINS(STR(?demographic), "race"))
+  }
+  ORDER BY ?regimeLabel ?demographic
+
+
+------------------------------------------------------------------------------
+Query 4: Full provenance chain for every claim
+------------------------------------------------------------------------------
+
+RATIONALE
+For every AnalysisResult in the graph, show its label, the script that
+produced it, the exact covariate set held constant, the null model, and the
+p-value. This is the query the SHACL DisparityTestCandidate shape was built
+to make possible: every claim carries its provenance or is rejected before
+it enters the graph.
+
+RESULTS (25 rows)
+  claimLabel                                                                                       derivedFromScript                                   covariateSet                                                                                                                                             nullModel                                                                                                                                                                                                                                                                                                                                                                                 pValue
+  -----------------------------------------------------------------------------------------------  --------------------------------------------------  -------------------------------------------------------------------------------------------------------------------------------------------------------  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------  ------
+  Community disparity: regime 1, conditional_on_primary, defendant_sex[T.M]                        scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 0, conditional_on_primary, defendant_sex[T.M]                        scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 0, unconditional, C(defendant_race)[T.Hispanic]                      scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, unconditional, C(defendant_race)[T.Black]                         scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, conditional_on_primary, C(defendant_race)[T.Hispanic]             scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 1, unconditional, defendant_citizenship[T.Non-US Extra-Territorial]  scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, unconditional, defendant_citizenship[T.Unknown]                   scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, conditional_on_primary, defendant_citizenship[T.US Citizen]       scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 1, unconditional, C(defendant_race)[T.Hispanic]                      scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, unconditional, defendant_sex[T.M]                                 scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 1, conditional_on_primary, C(defendant_race)[T.Hispanic]             scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 1, conditional_on_primary, C(defendant_race)[T.Black]                scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 1, conditional_on_primary, defendant_citizenship[T.Unknown]          scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 0, unconditional, defendant_citizenship[T.Non-US Extra-Territorial]  scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, conditional_on_primary, C(defendant_race)[T.Black]                scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 1, unconditional, C(defendant_race)[T.Black]                         scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, unconditional, defendant_citizenship[T.US Citizen]                scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, unconditional, defendant_citizenship[T.Legal Alien]               scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 1, unconditional, defendant_citizenship[T.Unknown]                   scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 1, unconditional, defendant_sex[T.M]                                 scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 1, unconditional, defendant_citizenship[T.US Citizen]                scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 1, conditional_on_primary, defendant_citizenship[T.US Citizen]       scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Community disparity: regime 1, unconditional, defendant_citizenship[T.Legal Alien]               scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                    logistic regression: P(regime=k) ~ demographics | severity + venue                                                                                                                                                                                                                                                                                                                        0.0   
+  Community disparity: regime 0, conditional_on_primary, defendant_citizenship[T.Unknown]          scripts/06_community_disparity.py                   race(White ref) + sex + citizenship + final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade + primary_offense  logistic regression: P(regime=k) ~ demographics | severity + venue + primary offense                                                                                                                                                                                                                                                                                                      0.0   
+  Adjusted co-occurrence: FRAUD <-> SEX                                                            scripts/03_compute_adjusted_cooccurrence.py:stage1  final_offense_level + criminal_history_category + mand_min_flag + district + fiscal_year_decade                                                          logistic regression: P(has_both_offenses) ~ final_offense_level + criminal_history_category + mand_min_flag + C(district) + C(fiscal_year_decade); odds ratio of observed vs severity-predicted joint rate; Wald z-test on log(OR); effect-size filter (default OR>=1.5 or OR<=1/1.5) applied BEFORE significance filter because at USSC-scale n, p-value alone is trivially significant  0.0   
+
+SPARQL
+  PREFIX : <https://traceoriginresearch.com/ussc-charge-graph/onto#>
+  PREFIX off: <https://traceoriginresearch.com/ussc-charge-graph/offense#>
+  PREFIX res: <https://traceoriginresearch.com/ussc-charge-graph/result#>
+  PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+  
+  SELECT ?claimLabel ?derivedFromScript ?covariateSet ?nullModel ?pValue
+  WHERE {
+    ?claim a :AnalysisResult ;
+           rdfs:label ?claimLabel ;
+           :wasDerivedFrom ?derivedFromScript ;
+           :covariateSet ?covariateSet ;
+           :nullModel ?nullModel ;
+           :pValue ?pValue .
+    FILTER(?pValue < 0.0001)
+  }
+  ORDER BY ?pValue
+  LIMIT 25
+
+
+==============================================================================
+END OF REPORT
+==============================================================================

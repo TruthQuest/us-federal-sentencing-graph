@@ -1,0 +1,8 @@
+offense_category,Pre-Booker,Post-Booker,Post-FSA,Post-A782,Post-FirstStep,migration_count
+ADMIN_JUST,,,,,0.0,0
+FIREARM,,,,0.0,,0
+FRAUD,,,,1.0,1.0,0
+LAUNDER,,,,1.0,1.0,0
+OTHER,,,,0.0,0.0,0
+RACKET,,,,0.0,,0
+VIOLENT,,,,,0.0,0
