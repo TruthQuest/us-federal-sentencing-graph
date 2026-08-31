@@ -1,5 +1,7 @@
 # us-federal-sentencing-graph
 
+![Federal sentencing yard at dusk](photos/u5771898551_A_prison_exercise_yard_at_dusk_hundreds_of_small__73545dc8-73c8-4c1f-911e-9ef735e4a9a9_1.png)
+
 A formal ontology and reproducible analysis pipeline over twelve years
 of U.S. federal sentencing records (FY2014-FY2025, 805,875 individual
 sentencing events) that surfaces race-patterned structure in
@@ -60,7 +62,8 @@ us-federal-sentencing-graph/
 │   └── (CSVs per script, plus sparql_report.txt)
 ├── run_all.sh                           End-to-end orchestrator
 ├── LICENSE                              Proprietary; see LICENSE file
-                       
+├── KNOWN_ISSUES.md
+└── README.md                            (this file)
 ```
 
 ## Reproducing the analysis
