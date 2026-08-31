@@ -1,0 +1,291 @@
+@prefix :        <https://traceoriginresearch.com/ussc-charge-graph/onto#> .
+@prefix bfo:     <http://purl.obolibrary.org/obo/> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix dpv:     <https://w3id.org/dpv#> .
+
+<https://traceoriginresearch.com/ussc-charge-graph/onto>
+    a owl:Ontology ;
+    rdfs:label "USSC Federal Sentencing T-Box"@en ;
+    rdfs:comment """
+        BFO-aligned schema over U.S. Sentencing Commission public datafiles
+        (ussc.gov/research/datafiles). Models sentencing events as processes
+        involving a defendant, a set of offenses of conviction, a guideline
+        computation, a presiding judge, and a district, with provenance
+        required on every derived (non-source) claim.
+
+        Deliberately narrower scope than the Cuban political-prisoners
+        T-Box: there is no analog to the SKOS editorial-note / state-language
+        distinction here, because USSC coding is itself already an analytic
+        product of the Commission, not a state's self-description of a
+        political charge. The load-bearing distinction in THIS ontology is
+        between offense-of-conviction (:hasOffenseCode) and legitimate
+        severity covariates (:hasGuidelineRange, :hasCriminalHistoryCategory,
+        :hasMandatoryMinimum), because conflating the two collapses the
+        entire analysis into 'the guidelines predict the guidelines.'
+    """@en ;
+    owl:versionInfo "0.1.0" .
+
+#################################################################
+## Core classes
+#################################################################
+
+:SentencingEvent a owl:Class ;
+    rdfs:subClassOf bfo:BFO_0000015 ;   # process
+    rdfs:label "Sentencing Event"@en ;
+    rdfs:comment "A single federal sentencing occurrence: one defendant, one docket, one judgment. Corresponds to one row in the USSC datafile for a given fiscal year." .
+
+:Defendant a owl:Class ;
+    rdfs:subClassOf bfo:BFO_0000040 ;   # material entity
+    rdfs:label "Defendant"@en .
+
+:FederalOffense a owl:Class ;
+    rdfs:subClassOf bfo:BFO_0000031 ;   # generically dependent continuant
+    rdfs:label "Federal Offense (of conviction)"@en ;
+    rdfs:comment "An offense type as coded by USSC (primary or secondary offense fields), drawn from :USSCOffenseVocabulary. Represents offense of CONVICTION, not original charge; see ontology-level comment on the charged/convicted distinction." .
+
+:Judge a owl:Class ;
+    rdfs:subClassOf bfo:BFO_0000040 ;
+    rdfs:label "Presiding Judge"@en ;
+    rdfs:comment "Identity may be suppressed or coarsened in USSC public files for low-volume district-years to prevent reidentification. Check per-fiscal-year data dictionary before asserting :presidingJudge; fall back to :inDistrict + fiscal year as the finest safe granularity when suppressed." .
+
+:District a owl:Class ;
+    rdfs:subClassOf bfo:BFO_0000040 ;
+    rdfs:label "Federal Judicial District"@en .
+
+:Circuit a owl:Class ;
+    rdfs:subClassOf bfo:BFO_0000040 ;
+    rdfs:label "Federal Judicial Circuit"@en .
+
+:GuidelineComputation a owl:Class ;
+    rdfs:subClassOf bfo:BFO_0000015 ;
+    rdfs:label "Guideline Computation"@en ;
+    rdfs:comment "The legitimate-severity computation attached to a SentencingEvent: final offense level, criminal history category, resulting range. Treated as covariate, not outcome, in the disparity analysis, EXCEPT where the analytic question is specifically whether guideline-computation inputs (e.g. enhancement application) are themselves disparately applied -- see :DisparityHypothesis." .
+
+:DisparityHypothesis a owl:Class ;
+    rdfs:label "Disparity Hypothesis"@en ;
+    rdfs:comment "A specific, falsifiable claim of the form: conditional on {offense level, criminal history category, mandatory minimum applicability, district-year}, {race | gender | district | judge} predicts {co-charge pattern | sentence length | departure direction} at a level inconsistent with chance. Every quantitative claim in results/ must be traceable to one instance of this class carrying explicit covariate set and null model." .
+
+#################################################################
+## Object properties
+#################################################################
+
+:hasOffenseCode a owl:ObjectProperty ;
+    rdfs:domain :SentencingEvent ;
+    rdfs:range :FederalOffense ;
+    rdfs:label "has offense code"@en .
+
+:coOccursWith a owl:ObjectProperty , owl:SymmetricProperty ;
+    rdfs:domain :FederalOffense ;
+    rdfs:range :FederalOffense ;
+    rdfs:label "co-occurs with"@en ;
+    rdfs:comment "Asserted only on the residualized graph (see :adjustedCoOccurrenceWeight), never on raw co-occurrence counts, to avoid re-deriving guideline structure as if it were a charging regime." .
+
+:presidingJudge a owl:ObjectProperty ;
+    rdfs:domain :SentencingEvent ;
+    rdfs:range :Judge .
+
+:inDistrict a owl:ObjectProperty ;
+    rdfs:domain :SentencingEvent ;
+    rdfs:range :District .
+
+:districtInCircuit a owl:ObjectProperty ;
+    rdfs:domain :District ;
+    rdfs:range :Circuit .
+
+:hasGuidelineComputation a owl:ObjectProperty ;
+    rdfs:domain :SentencingEvent ;
+    rdfs:range :GuidelineComputation .
+
+:testsHypothesis a owl:ObjectProperty ;
+    rdfs:domain :AnalysisResult ;
+    rdfs:range :DisparityHypothesis .
+
+#################################################################
+## Data properties: outcome / demographic / severity fields
+## Field names track USSC codebook conventions (MONYEAR, NEWRACE,
+## MONSEX, XCASETYPE, SENTTOT, etc.) deliberately, so the ETL layer
+## is a near-direct column mapping and auditable against the codebook.
+#################################################################
+
+:fiscalYear a owl:DatatypeProperty ; rdfs:domain :SentencingEvent ; rdfs:range xsd:gYear .
+:sentenceMonths a owl:DatatypeProperty ; rdfs:domain :SentencingEvent ; rdfs:range xsd:decimal .
+:guidelineMinMonths a owl:DatatypeProperty ; rdfs:domain :GuidelineComputation ; rdfs:range xsd:decimal .
+:guidelineMaxMonths a owl:DatatypeProperty ; rdfs:domain :GuidelineComputation ; rdfs:range xsd:decimal .
+:finalOffenseLevel a owl:DatatypeProperty ; rdfs:domain :GuidelineComputation ; rdfs:range xsd:integer .
+:criminalHistoryCategory a owl:DatatypeProperty ; rdfs:domain :GuidelineComputation ; rdfs:range xsd:integer .
+:hasMandatoryMinimum a owl:DatatypeProperty ; rdfs:domain :SentencingEvent ; rdfs:range xsd:boolean ;
+    rdfs:comment "Modeled as a data property on SentencingEvent, not folded into GuidelineComputation, because whether a mandatory minimum attaches is frequently itself the charging-discretion lever under study, not a pre-existing severity fact." .
+:departureDirection a owl:DatatypeProperty ; rdfs:domain :SentencingEvent ; rdfs:range xsd:string ;
+    rdfs:comment "One of: none, upward, downward-substantial-assistance, downward-other." .
+
+:defendantRace a owl:DatatypeProperty ; rdfs:domain :Defendant ; rdfs:range xsd:string ;
+    rdfs:comment "Tracks USSC NEWRACE coding. Category boundaries and coding changed across the 1991-present window; ETL layer must apply the year-specific crosswalk, not assume a stable category set." .
+:defendantSex a owl:DatatypeProperty ; rdfs:domain :Defendant ; rdfs:range xsd:string .
+:defendantCitizenship a owl:DatatypeProperty ; rdfs:domain :Defendant ; rdfs:range xsd:string .
+
+#################################################################
+## Provenance and disparity-analysis result classes
+## (structurally identical role to the Cuba T-Box's prov:wasDerivedFrom
+## discipline: every derived claim must cite its covariate set and null.)
+#################################################################
+
+:AnalysisResult a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Analysis Result"@en .
+
+#################################################################
+## Two-filter distinction
+##
+## The pipeline needs to distinguish between two DIFFERENT things a
+## co-occurrence statistic can be used for. Conflating them is the
+## single most common failure mode and destroys the very signal a
+## disparity analysis is trying to find.
+##
+## :RegimeEdgeCandidate = "is this pair part of a population-level
+##   charging regime worth naming?" Filtered by effect size (OR) AND
+##   significance at the population level.
+##
+## :DisparityTestCandidate = "is this pair worth testing for
+##   demographic disparity?" Filtered ONLY by adequate joint sample
+##   size (so a race-covariate logit can be fit). Effect-size filtering
+##   here would systematically exclude the subset of pairs where the
+##   pop-level effect is null-ish precisely BECAUSE a strong within-
+##   group effect is diluted by a weak majority-group effect. That
+##   dilution IS the disparity; filtering it out is filtering out the
+##   thing you are trying to find.
+##
+## SHACL enforces the distinction: a :DisparityTestCandidate must NOT
+## cite a stage-1 effect-size filter in its covariateSet.
+#################################################################
+
+:RegimeEdgeCandidate a owl:Class ;
+    rdfs:subClassOf :AnalysisResult ;
+    rdfs:label "Regime Edge Candidate"@en ;
+    rdfs:comment "An offense-pair co-occurrence claim intended to inform community detection. Filtered by both effect size and significance at the population level. Not appropriate as input to a demographic disparity test." .
+
+:DisparityTestCandidate a owl:Class ;
+    rdfs:subClassOf :AnalysisResult ;
+    rdfs:label "Disparity Test Candidate"@en ;
+    rdfs:comment "An offense-pair co-occurrence claim intended for demographic disparity testing. MUST NOT be filtered by stage-1 effect-size or significance thresholds -- doing so systematically excludes exactly the pairs where the pop-level effect is null-ish because a within-group effect is diluted by a majority-group effect. Filtered ONLY by adequate joint sample size." .
+
+:candidateFilterApplied a owl:DatatypeProperty ;
+    rdfs:domain :AnalysisResult ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Which filter regime was applied to select this claim, e.g. 'effect_size_and_significance', 'joint_sample_size_only'." .
+
+:adjustedCoOccurrenceWeight a owl:DatatypeProperty ;
+    rdfs:domain :AnalysisResult ; rdfs:range xsd:decimal ;
+    rdfs:comment "Regression-residualized co-occurrence strength between two FederalOffense instances, NOT raw joint frequency. See scripts/03_compute_adjusted_cooccurrence.py." .
+
+:covariateSet a owl:DatatypeProperty ;
+    rdfs:domain :AnalysisResult ; rdfs:range xsd:string ;
+    rdfs:comment "Serialized list of covariates held constant for this result, e.g. 'final_offense_level,criminal_history_category,district_year,mand_min'." .
+
+:nullModel a owl:DatatypeProperty ;
+    rdfs:domain :AnalysisResult ; rdfs:range xsd:string .
+
+:pValue a owl:DatatypeProperty ;
+    rdfs:domain :AnalysisResult ; rdfs:range xsd:decimal .
+
+:wasDerivedFrom a owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:wasDerivedFrom ;
+    rdfs:domain :AnalysisResult .
+
+#################################################################
+## Charging-regime layer
+##
+## A ChargingRegime is an EMPIRICALLY DERIVED cluster of federal
+## offense categories that co-occur at rates inconsistent with the
+## guideline-severity null, i.e. the community-detected output of
+## scripts/04_community_detection.py. Regime membership is a property
+## of an offense within a specific PolicyEpoch, not a permanent trait,
+## because the same offense can migrate between regimes across major
+## sentencing policy shocks (see :PolicyEpoch).
+#################################################################
+
+:ChargingRegime a owl:Class ;
+    rdfs:subClassOf :AnalysisResult ;
+    rdfs:label "Charging Regime"@en ;
+    rdfs:comment "A community of federal offense categories detected by Louvain on the regression-adjusted co-occurrence graph, valid within a specific PolicyEpoch. NOT an assertion of prosecutorial intent; a structural finding about how charges co-appear on convictions." .
+
+:hasRegimeMembership a owl:ObjectProperty ;
+    rdfs:domain :FederalOffense ;
+    rdfs:range :ChargingRegime ;
+    rdfs:label "has regime membership"@en .
+
+:regimeInEpoch a owl:ObjectProperty ;
+    rdfs:domain :ChargingRegime ;
+    rdfs:range :PolicyEpoch .
+
+:regimeStabilityScore a owl:DatatypeProperty ;
+    rdfs:domain :ChargingRegime ;
+    rdfs:range xsd:decimal ;
+    rdfs:comment "Bootstrap co-membership stability of this regime (0.0-1.0). Below ~0.7, treat 'regime' language as unwarranted." .
+
+#################################################################
+## Policy-epoch layer
+##
+## Federal sentencing has undergone discrete structural changes since
+## 1991. Analyses that pool across these without epoch fixed effects
+## silently average away real policy effects. Epochs are modeled as
+## first-class entities so :ChargingRegime instances can be epoch-scoped
+## and cross-epoch migration is queryable.
+#################################################################
+
+:PolicyEpoch a owl:Class ;
+    rdfs:subClassOf bfo:BFO_0000015 ;
+    rdfs:label "Sentencing Policy Epoch"@en .
+
+:epochStartYear a owl:DatatypeProperty ; rdfs:domain :PolicyEpoch ; rdfs:range xsd:gYear .
+:epochEndYear a owl:DatatypeProperty ; rdfs:domain :PolicyEpoch ; rdfs:range xsd:gYear .
+:epochShockEvent a owl:DatatypeProperty ; rdfs:domain :PolicyEpoch ; rdfs:range xsd:string ;
+    rdfs:comment "The policy shock inaugurating this epoch (e.g. 'Booker 2005', 'Fair Sentencing Act 2010', 'Amendment 782 2014', 'First Step Act 2018')." .
+
+#################################################################
+## Judge signature layer
+##
+## Distinct from judge fixed effects in a regression: a JudgeSignature
+## is a REGIME-APPLICATION VECTOR for a judge, i.e. the fraction of
+## their sentencing events falling into each detected regime, tested
+## for stability when the judge changes districts or when the office of
+## prosecution changes around them. Purpose: distinguish district-level
+## regime effects from judge-level ones from prosecutor-office-level
+## ones. Only computable in years where judge identifiers are not
+## suppressed; see :Judge notes.
+#################################################################
+
+:JudgeSignature a owl:Class ;
+    rdfs:subClassOf :AnalysisResult ;
+    rdfs:label "Judge Regime-Application Signature"@en .
+
+:signatureFor a owl:ObjectProperty ; rdfs:domain :JudgeSignature ; rdfs:range :Judge .
+:regimeShare a owl:DatatypeProperty ; rdfs:domain :JudgeSignature ; rdfs:range xsd:string ;
+    rdfs:comment "Serialized JSON: {regime_id: share_of_this_judges_cases_in_regime, ...}" .
+:signatureStabilityAcrossVenue a owl:DatatypeProperty ; rdfs:domain :JudgeSignature ; rdfs:range xsd:decimal ;
+    rdfs:comment "Cosine similarity between this judge's regime-share vector in venue A vs venue B; only meaningful when the judge appears in >= 2 venues with adequate case counts." .
+
+#################################################################
+## Counterfactual regime assignment
+##
+## For each SentencingEvent, predict which regime a defendant SHOULD
+## have landed in given severity + district + fiscal-year features
+## alone (no demographic features in the predictor), then compare
+## against ACTUAL regime membership. Systematic divergence patterned
+## by race/sex/citizenship is the individual-level disparity claim,
+## analogous to the Cuba analyst-vs-algorithm 97-98% agreement check
+## except that "algorithm" here plays the role of the null-model
+## prediction and the "analyst" role is played by observed reality.
+#################################################################
+
+:CounterfactualRegimePrediction a owl:Class ;
+    rdfs:subClassOf :AnalysisResult .
+
+:predictedRegime a owl:ObjectProperty ; rdfs:domain :CounterfactualRegimePrediction ; rdfs:range :ChargingRegime .
+:actualRegime a owl:ObjectProperty ; rdfs:domain :CounterfactualRegimePrediction ; rdfs:range :ChargingRegime .
+:predictionForEvent a owl:ObjectProperty ; rdfs:domain :CounterfactualRegimePrediction ; rdfs:range :SentencingEvent .
+:regimeDivergenceFlag a owl:DatatypeProperty ; rdfs:domain :CounterfactualRegimePrediction ; rdfs:range xsd:boolean .

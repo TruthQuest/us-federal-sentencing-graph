@@ -1,0 +1,102 @@
+@prefix :      <https://traceoriginresearch.com/ussc-charge-graph/onto#> .
+@prefix sh:    <http://www.w3.org/ns/shacl#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+# Core validation intent: an AnalysisResult (any adjusted-co-occurrence
+# edge, any disparity statistic) is REJECTED unless it carries an explicit
+# covariate set, an explicit null model, and a provenance link. This is
+# the direct analog of the Cuba project's rule that SHACL rejects any
+# assertion of state practice lacking provenance -- here the failure mode
+# being guarded against is a co-occurrence or disparity claim that has
+# silently NOT controlled for offense level / criminal history / mand-min,
+# which would just be re-deriving the guidelines and mislabeling it bias.
+#################################################################
+
+:AnalysisResultShape a sh:NodeShape ;
+    sh:targetClass :AnalysisResult ;
+    sh:property [
+        sh:path :covariateSet ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Every AnalysisResult must declare its covariate set explicitly. An empty covariate set is a valid VALUE ('none') but must be asserted, not omitted -- silent omission is indistinguishable from an oversight." ;
+    ] ;
+    sh:property [
+        sh:path :nullModel ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Every AnalysisResult must declare its null model (e.g. 'marginal-preserving permutation, n=5000, seed=42' or 'logistic regression, offense-level+CH-category+district-year FE')." ;
+    ] ;
+    sh:property [
+        sh:path :pValue ;
+        sh:minCount 1 ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 1.0 ;
+    ] ;
+    sh:property [
+        sh:path :wasDerivedFrom ;
+        sh:minCount 1 ;
+        sh:message "Every AnalysisResult must cite the specific query/script and dataset snapshot it was derived from." ;
+    ] .
+
+:SentencingEventShape a sh:NodeShape ;
+    sh:targetClass :SentencingEvent ;
+    sh:property [
+        sh:path :hasOffenseCode ;
+        sh:minCount 1 ;
+        sh:message "A SentencingEvent with no offense code is not usable for co-occurrence analysis; likely an ETL failure, not a legitimate zero-offense record." ;
+    ] ;
+    sh:property [
+        sh:path :hasGuidelineComputation ;
+        sh:minCount 1 ;
+        sh:message "GuidelineComputation is required so severity confounds can always be controlled for -- do not permit SentencingEvent instances that skip this, or the covariate-adjusted pipeline silently degrades to the raw (confounded) analysis for those rows." ;
+    ] ;
+    sh:property [
+        sh:path :fiscalYear ;
+        sh:minCount 1 ;
+        sh:datatype xsd:gYear ;
+    ] .
+
+:JudgeIdentitySuppressionShape a sh:NodeShape ;
+    sh:targetClass :SentencingEvent ;
+    sh:message "If :presidingJudge is absent, :inDistrict and :fiscalYear must both be present so district-year remains usable as the fallback unit of analysis." ;
+    sh:or (
+        [ sh:property [ sh:path :presidingJudge ; sh:minCount 1 ] ]
+        [ sh:and (
+            [ sh:property [ sh:path :inDistrict ; sh:minCount 1 ] ]
+            [ sh:property [ sh:path :fiscalYear ; sh:minCount 1 ] ]
+          ) ]
+    ) .
+
+#################################################################
+# Two-filter discipline
+#
+# A :DisparityTestCandidate that was pre-filtered by a stage-1
+# effect-size or significance threshold is REJECTED, because that
+# filter systematically excludes precisely the pairs where the
+# demographic disparity lives (strong within-group effect diluted by
+# weak majority-group effect => null pop-level OR). Enforcing this at
+# the shape level prevents an analyst from silently re-conflating the
+# two filters and calling the resulting output a disparity finding.
+#################################################################
+
+:DisparityTestCandidateShape a sh:NodeShape ;
+    sh:targetClass :DisparityTestCandidate ;
+    sh:property [
+        sh:path :candidateFilterApplied ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:in ( "joint_sample_size_only" ) ;
+        sh:message "A DisparityTestCandidate must declare candidateFilterApplied = 'joint_sample_size_only'. Values indicating stage-1 effect-size or significance pre-filtering are rejected because such filtering excludes the pairs where demographic disparity is diluted at the population level (which is most of them)." ;
+    ] .
+
+:RegimeEdgeCandidateShape a sh:NodeShape ;
+    sh:targetClass :RegimeEdgeCandidate ;
+    sh:property [
+        sh:path :candidateFilterApplied ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:in ( "effect_size_and_significance" ) ;
+        sh:message "A RegimeEdgeCandidate must declare candidateFilterApplied = 'effect_size_and_significance' so it is clear that pop-level filtering was applied and this edge is NOT appropriate to hand to a demographic-disparity test." ;
+    ] .

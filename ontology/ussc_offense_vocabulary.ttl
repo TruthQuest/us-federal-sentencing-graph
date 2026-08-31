@@ -1,0 +1,43 @@
+@prefix :     <https://traceoriginresearch.com/ussc-charge-graph/onto#> .
+@prefix off:  <https://traceoriginresearch.com/ussc-charge-graph/offense#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+off:USSCOffenseVocabulary a skos:ConceptScheme ;
+    skos:prefLabel "USSC Primary Offense Category Vocabulary"@en ;
+    skos:definition """
+        Top-level offense categories following the USSC datafile XCASETYPE /
+        primary-offense coding used across Monitoring of Federal Criminal
+        Sentences (MFCS) datafiles, 1991-present. Sub-codes (drug type,
+        firearm count, loss amount bracket, etc.) attach as skos:narrower
+        concepts and should be populated from the fiscal-year-specific
+        codebook rather than hardcoded here, since sub-code sets change
+        across years (most notably: fraud loss brackets under the 2001 and
+        2015 guideline amendments, and drug quantity tables under
+        Amendment 782 in 2014).
+    """ .
+
+# Top-level categories. Codes are placeholders for the actual XCASETYPE
+# values, which must be pulled from the year-specific USSC codebook
+# (they are NOT stable across all 35 years) -- see ontology/README.md.
+
+off:DRUG        a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Drug Trafficking / Manufacturing / Import"@en ; skos:notation "DRUG" .
+off:DRUG_POSS   a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Simple Drug Possession"@en ; skos:notation "DRUG_POSS" ; skos:broader off:DRUG .
+off:FIREARM     a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Firearms (Title 18 Ch 44)"@en ; skos:notation "FIREARM" .
+off:IMMIG       a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Immigration (Title 8, esp. §1326 reentry)"@en ; skos:notation "IMMIG" .
+off:FRAUD       a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Fraud (wire, mail, bank, ID, computer, healthcare)"@en ; skos:notation "FRAUD" .
+off:LAUNDER     a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Money Laundering (18 USC §§1956-57, 31 USC §§5322-31)"@en ; skos:notation "LAUNDER" .
+off:RACKET      a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Racketeering / RICO / Hobbs Act / Extortion"@en ; skos:notation "RACKET" .
+off:VIOLENT     a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Robbery / Assault / Murder / Carjacking"@en ; skos:notation "VIOLENT" .
+off:SEX         a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Sex Offense / Child Pornography / SORNA"@en ; skos:notation "SEX" .
+off:ADMIN_JUST  a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Administration of Justice (obstruction, perjury, false statements, failure to appear)"@en ; skos:notation "ADMIN_JUST" ;
+    skos:editorialNote "Analytically central: the primary federal stacking category, structural analog to the Cuban 'street-protest bundle' low-severity stacking charges (Contempt, Resistance). Test co-occurrence of this category against every other primary offense first." .
+off:CONSPIRACY  a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "General Conspiracy (18 USC §371)"@en ; skos:notation "CONSPIRACY" ;
+    skos:editorialNote "Treated as its own category rather than folded into the primary offense. Analytically load-bearing: '§371 stacked with substantive offense' is a distinct charging pattern from either alone, and pooling them destroys the signal. Note: drug-conspiracy (21 USC §846) is DELIBERATELY kept in DRUG rather than here." .
+off:WEAPON      a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Non-firearm Weapons of Mass Destruction (18 USC §2332)"@en ; skos:notation "WEAPON" .
+off:TAX         a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Tax (26 USC §§7201-7212)"@en ; skos:notation "TAX" .
+off:BRIBERY     a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Bribery / Corruption (18 USC §201, §666)"@en ; skos:notation "BRIBERY" .
+off:REGULATORY  a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Antitrust / Environmental / Regulatory"@en ; skos:notation "REGULATORY" .
+off:NATL_DEF    a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "National Defense / Terrorism / IEEPA"@en ; skos:notation "NATL_DEF" .
+off:OTHER       a skos:Concept ; skos:inScheme off:USSCOffenseVocabulary ; skos:prefLabel "Other / Unmapped"@en ; skos:notation "OTHER" ;
+    skos:editorialNote "Any citation not matching a rule in scripts/statute_categorizer.py._RULES. Audit per fiscal year: OTHER volume above ~15% of total charge citations indicates a coverage gap in the mapper, not a real 'other' category surge." .
